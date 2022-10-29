@@ -10,9 +10,30 @@
 </head>
 <body>
     <div id="app">
+            <div class="new-task">
+              <label for="task-text">Nuova task</label>
+              <input
+                type="text"
+                id="task-text"
+                placeholder="Inserisci una nuova task"
+                v-model.trim="newTask"
+                @keyup.enter="addNewTask"
+              />
+              <button @click="addNewTask">Inserisci</button>
+              <div class="error" v-if="error">
+                <small>Il task deve essere lungo almeno  5 caratteri</small>
+              </div>
+            </div>
+
         <ul>
             <li v-for="(task, index) in tasks">
-                {{task.text}} {{task.done}}
+             
+                <span 
+                    :class="{ 'task-done': task.done }"
+                    @click="change(index)">
+                    {{task.text}}
+                </span>
+                <span class="task-delete" @click="removeTask(index)">&cross;</span>
             </li>
         </ul>
     </div>

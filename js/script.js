@@ -12,6 +12,8 @@ const {createApp} = Vue;
 createApp({
     data(){
         return{
+            newTask: "",
+            error: false,
             tasks:[
                 {
                     text: "Fare la spesa",
@@ -27,5 +29,35 @@ createApp({
                 }
             ],
         }
+    },
+    methods: {
+        change(taskIndex) {
+ 
+            const todoClick = this.tasks[taskIndex];
+            todoClick.done = !todoClick.done;
+          },
+          removeTask(taskIndex) {
+            this.tasks.splice(taskIndex, 1);
+          },
+          addNewTask() {
+            if (this.newTask.length > 5) {
+              // Aggiungo il nuovo todo
+              const task = {
+                text: this.newTask,
+                done: false,
+              };
+              this.tasks.push(task);
+              // this.todos.push({
+              //   text: this.newTodo,
+              //   done: false,
+              // });
+      
+              // Ripulisco l'input del todo
+              this.newTask = "";
+              this.error = false;
+            } else {
+              this.error = true;
+            }
+          },
     }
 }).mount("#app")
